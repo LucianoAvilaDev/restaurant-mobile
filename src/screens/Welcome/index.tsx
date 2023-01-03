@@ -30,7 +30,7 @@ const Index = () => {
         <Animatable.Text
           animation="fadeInDown"
           easing="ease-in-out"
-          className="text-white text-lg py-6 px-12 text-center"
+          className="text-white font-medium text-lg py-6 px-12 text-center"
         >
           Gerencie o seu restaurante da palma da sua mão!
         </Animatable.Text>

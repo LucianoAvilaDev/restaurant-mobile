@@ -1,7 +1,7 @@
 export const GetStyleByColorName = (color: string) => {
   switch (color) {
     case "primary":
-      return "bg-blue-500 text-white focus:bg-blue-700 hover:bg-blue-400";
+      return "bg-themeMedium text-white focus:bg-themeDark hover:bg-themeLight";
 
     case "secondary":
       return "bg-gray-700 text-white focus:bg-black hover:bg-gray-500";

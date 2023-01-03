@@ -27,7 +27,7 @@ export const ButtonSolid = ({ label, color, type, onPress }: Props) => {
       }}
     >
       <Text
-        className={`${styleButton} shadow text-center font-bold text-xl p-3 rounded-2xl`}
+        className={`${styleButton} shadow text-center font-semibold text-xl tracking-widest p-3 rounded-full`}
       >
         {label}
       </Text>

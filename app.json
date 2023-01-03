@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "restaurant-mobile",
+    "slug": "restaurant-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./src/assets/logo.png",
-      "resizeMode": "contain",
+      "resizeMode": "",
       "backgroundColor": "#ffffff"
     },
     "updates": {

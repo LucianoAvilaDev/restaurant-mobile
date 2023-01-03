@@ -21,7 +21,7 @@ export default function Routes() {
   return (
     <Stack.Navigator
       screenOptions={{
-        animation: "slide_from_bottom",
+        animation: "slide_from_left",
         animationDuration: 100,
       }}
     >
