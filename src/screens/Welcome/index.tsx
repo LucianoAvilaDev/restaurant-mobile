@@ -35,18 +35,14 @@ const Index = () => {
           Gerencie o seu restaurante da palma da sua mão!
         </Animatable.Text>
         <Animatable.View
-          animation="bounceIn"
+          animation="fadeInDown"
           easing="ease-in-out"
           className="py-2 items-center justify-center shadow"
         >
           <Animatable.Image source={logo} className={`w-44 h-44`} />
         </Animatable.View>
       </View>
-      <Animatable.View
-        animation="fadeIn"
-        easing="ease-in-out"
-        className="flex-1 p-8 w-full justify-end "
-      >
+      <View className="flex-1 p-8 w-full justify-end ">
         <ButtonSolid
           label={"Realizar Login"}
           color={"default"}
@@ -54,7 +50,7 @@ const Index = () => {
             navigation.navigate(`SignIn`);
           }}
         />
-      </Animatable.View>
+      </View>
     </SafeAreaView>
   );
 };

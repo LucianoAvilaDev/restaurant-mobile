@@ -1,22 +1,25 @@
 import React from "react";
 import { Text, TextInput, View } from "react-native";
+import ErrorLabel from "./ErrorLabel";
 
 type Props = {
   label: string;
-  onBlur: any;
-  onChange: any;
-  value: any;
   readonly?: boolean;
   placeholder?: string;
+  register: any;
+  errorMessage?: any;
+  onChange?: Function;
+  value?: any;
 };
 
 export const InputPassword = ({
-  onBlur,
   readonly,
-  onChange,
-  value,
   label,
   placeholder,
+  register,
+  errorMessage,
+  onChange,
+  value,
 }: Props) => {
   return (
     <View className="space-y-2">
@@ -29,19 +32,17 @@ export const InputPassword = ({
       </View>
       <View>
         <TextInput
+          {...register}
+          className="bg-white border-gray-300  border-2 p-2 rounded-lg text-lg"
           selectionColor={"rgb(230, 28, 28)"}
           cursorColor={"rgb(185, 28, 28)"}
+          onChangeText={(text: string) => (onChange ? onChange(text) : null)}
           editable={!readonly}
           secureTextEntry={true}
-          className="bg-white border-gray-300  border-2 p-2 rounded-lg text-lg"
-          onBlur={onBlur}
-          onChangeText={() => {
-            onChange ? onChange() : null;
-          }}
           value={value}
-          selectTextOnFocus
           placeholder={placeholder}
         />
+        {errorMessage && <ErrorLabel>{errorMessage}</ErrorLabel>}
       </View>
     </View>
   );

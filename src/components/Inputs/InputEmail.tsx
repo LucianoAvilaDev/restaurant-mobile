@@ -13,7 +13,7 @@ type Props = {
   value?: any;
 };
 
-export const InputText = ({
+export const InputEmail = ({
   readonly,
   label,
   placeholder,
@@ -46,6 +46,7 @@ export const InputText = ({
           }}
           onBlur={onBlur ?? null}
           error={errorMessage}
+          keyboardType="email-address"
         />
         {errorMessage && <ErrorLabel>{errorMessage}</ErrorLabel>}
       </View>
