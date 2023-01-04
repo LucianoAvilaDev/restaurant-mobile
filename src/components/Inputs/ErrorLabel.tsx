@@ -5,7 +5,9 @@ const ErrorLabel = ({ children }: any) => {
   return (
     <View>
       <View className={`absolute items-start`}>
-        <Text className="px-1 text-red-500 font-bold text-lg">{children}</Text>
+        <Text className="left-2 text-red-500 font-normal text-base">
+          {children}
+        </Text>
       </View>
     </View>
   );

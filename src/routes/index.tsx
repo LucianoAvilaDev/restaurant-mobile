@@ -1,36 +1,20 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useContext } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { AuthContext } from "../contexts/AuthContext";
 
-import SignIn from "../screens/SignIn";
-import Welcome from "../screens/Welcome";
-
-const Stack = createNativeStackNavigator();
-
-const config = {
-  animation: "spring",
-  config: {
-    stiffness: 1000,
-    damping: 50,
-    mass: 3,
-    overshootClamping: false,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
+import AppRoutes from "./app.routes";
+import AuthRoutes from "./auth.routes";
 
 export default function Routes() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        animation: "slide_from_left",
-        animationDuration: 100,
-      }}
-    >
-      <Stack.Screen
-        name="Welcome"
-        component={Welcome}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="SignIn" component={SignIn} />
-    </Stack.Navigator>
-  );
+  const { isAuthenticated, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 bg-themeMedium justify-center items-center">
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
+    );
+  }
+  return isAuthenticated ? <AppRoutes /> : <AuthRoutes />;
 }

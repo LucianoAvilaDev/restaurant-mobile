@@ -1,19 +1,26 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, Image, SafeAreaView, Text, View } from "react-native";
-import * as Animatable from "react-native-animatable";
-import logo from "../../assets/logo2.png";
+import { Alert, SafeAreaView, View } from "react-native";
 import { ButtonSolid } from "../../components/Buttons/ButtonSolid";
 import { LinkButton } from "../../components/Buttons/LinkButton";
 import { Checkbox } from "../../components/Inputs/Checkbox";
 import { InputEmail } from "../../components/Inputs/InputEmail";
 import { InputPassword } from "../../components/Inputs/InputPassword";
+import { RecoverForm } from "../../components/templates/forms/RecoverForm";
+import { ModalTemplate } from "../../components/templates/ModalTemplate";
+import { PageHeader } from "../../components/templates/PageHeader";
+import { AuthContext } from "../../contexts/AuthContext";
 import { LoginSchema } from "../../schemas/LoginSchema";
 
 const Index = () => {
   const navigation = useNavigation();
+
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const { signIn } = useContext(AuthContext);
 
   const {
     register,
@@ -25,8 +32,15 @@ const Index = () => {
     resolver: yupResolver(LoginSchema()),
   });
 
-  const onSubmit = (data: any) => {
-    Alert.alert(data.email, data.password);
+  const onSubmit = async (data: any) => {
+    try {
+      await signIn(data).then(async () => {
+        const user: any = await AsyncStorage.getItem("@Restaurant:user");
+        Alert.alert(user ?? "");
+      });
+    } catch (e: any) {
+      Alert.alert(JSON.stringify(e));
+    }
   };
 
   useLayoutEffect(() => {
@@ -37,21 +51,16 @@ const Index = () => {
 
   return (
     <SafeAreaView className={`flex-1 items-center bg-themeBgBody`}>
-      <View className="absolute w-full h-48 items-end px-4 bg-themeDarker"></View>
+      <ModalTemplate visible={modalVisible} setVisible={setModalVisible}>
+        <RecoverForm />
+      </ModalTemplate>
 
-      <Animatable.View
-        animation="slideInDown"
-        className="flex items-end py-4 px-5 w-full rounded-bl-full bg-themeMedium"
-      >
-        <Image source={logo} className={`w-20 h-20`} />
+      <PageHeader
+        title={"Acessar conta"}
+        subtitle={"Faça login na sua conta!"}
+      />
 
-        <Text className="text-white text-4xl pt-4">Acessar conta</Text>
-        <Text className="text-white text-base font-light pt-2 pb-6 text-center">
-          Faça login na sua conta!
-        </Text>
-      </Animatable.View>
-
-      <View className="flex-1 pt-16 px-8 space-y-6  w-full justify- ">
+      <View className="flex-1 pt-16 px-8 space-y-5  w-full ">
         <View>
           <Controller
             control={control}
@@ -89,25 +98,24 @@ const Index = () => {
             name="password"
           />
         </View>
-        <View className="flex flex-row py-2 items-center justify-between ">
-          <View>
-            <Checkbox label={`Lembrar-me`} />
-          </View>
-          <View>
-            <LinkButton
-              onPress={() => {
-                Alert.alert("Email com recuperação enviado!");
-              }}
-              label={`Recuperar senha`}
-            />
-          </View>
+        <View className="flex pt-8 items-center justify-between ">
+          <Checkbox label={`Lembrar-me`} />
         </View>
-        <View className="flex-1 py-8 w-full justify-end ">
+        <View className="flex-1 pt-8 w-full">
           <ButtonSolid
             label={"Entrar"}
             color={"primary"}
             onPress={handleSubmit((data: any) => onSubmit(data))}
           />
+          <View className="flex py-4 items-center">
+            <LinkButton
+              onPress={() => {
+                setModalVisible(true);
+                // navigation.navigate("Recover");
+              }}
+              label={`Esqueceu sua senha? Clique AQUI!`}
+            />
+          </View>
         </View>
       </View>
     </SafeAreaView>

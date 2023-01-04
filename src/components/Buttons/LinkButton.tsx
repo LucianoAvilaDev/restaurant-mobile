@@ -12,7 +12,7 @@ export const LinkButton = ({ label, onPress }: Props) => {
       onPress={() => {
         onPress ? onPress() : null;
       }}
-      className="py-4 px-2 text-base font-bold self-end"
+      className="py-4 active:opacity-50 px-2 text-lg font-bold"
     >
       {label}
     </Text>

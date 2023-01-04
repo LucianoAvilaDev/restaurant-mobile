@@ -21,7 +21,7 @@ export const Checkbox = ({ label, readonly }: any) => {
         onValueChange={() => setValue(!value)}
         value={value}
       />
-      <Text className={`font-bold text-base`}>{label ?? "Habilitar"}</Text>
+      <Text className={`font-medium text-lg`}>{label ?? "Habilitar"}</Text>
     </View>
   );
 };

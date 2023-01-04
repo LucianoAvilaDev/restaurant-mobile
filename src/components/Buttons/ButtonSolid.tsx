@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
+import { styles } from "../../styles/main";
 import { GetStyleByColorName } from "../../utils/GetStyleByColorName";
 
 type Props = {
@@ -21,12 +22,13 @@ export const ButtonSolid = ({ label, color, type, onPress }: Props) => {
 
   return (
     <TouchableOpacity
-      className="border-transparent active:p-2"
+      className="border-transparent active:opacity-70"
       onPress={async () => {
         onPress ? await onPress() : null;
       }}
     >
       <Text
+        style={styles.shadow}
         className={`${styleButton} shadow text-center font-semibold text-xl tracking-widest p-3 rounded-full`}
       >
         {label}
