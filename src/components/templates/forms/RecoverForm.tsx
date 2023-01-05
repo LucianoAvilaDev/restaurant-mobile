@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { AxiosError } from "axios";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
@@ -19,10 +20,19 @@ export const RecoverForm = () => {
   });
 
   const onSubmit = (data: any) => {
-    Alert.alert(data.email);
-    api.post("recovery", data).then(() => {
-      return;
-    });
+    api
+      .post("recovery", data)
+      .then(() => {
+        return;
+      })
+      .catch(async (e: AxiosError) => {
+        if (e.response?.status == 400) {
+          Alert.alert(
+            "E-mail não encontrado!",
+            "Verifique se o e-mail digitado está correto"
+          );
+        }
+      });
   };
 
   return (

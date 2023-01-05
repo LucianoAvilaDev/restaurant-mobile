@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TextInput, View } from "react-native";
+import { styles } from "../../styles/main";
 import ErrorLabel from "./ErrorLabel";
 
 type Props = {
@@ -33,7 +34,8 @@ export const InputPassword = ({
       <View>
         <TextInput
           {...register}
-          className="bg-white border-gray-300  border-2 p-2 rounded-lg text-lg"
+          style={styles.shadow}
+          className="bg-white border-gray-300  border p-2 rounded-lg text-lg"
           selectionColor={"rgb(230, 28, 28)"}
           cursorColor={"rgb(185, 28, 28)"}
           onChangeText={(text: string) => (onChange ? onChange(text) : null)}

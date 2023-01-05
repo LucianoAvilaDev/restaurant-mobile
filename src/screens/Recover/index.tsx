@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
-import { useLayoutEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, SafeAreaView, View } from "react-native";
 import { ButtonSolid } from "../../components/Buttons/ButtonSolid";
@@ -24,12 +23,6 @@ const Index = () => {
   const onSubmit = (data: any) => {
     Alert.alert(data.email);
   };
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
 
   return (
     <SafeAreaView className={`flex-1 items-center bg-themeBgBody`}>

@@ -1,28 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, Image, SafeAreaView, ScrollView, View } from "react-native";
-import * as Animatable from "react-native-animatable";
-import logo from "../../assets/logo3.png";
+import { Alert, SafeAreaView, ScrollView, View } from "react-native";
 import { ButtonSolid } from "../../components/Buttons/ButtonSolid";
-import { LinkButton } from "../../components/Buttons/LinkButton";
 import { Checkbox } from "../../components/Inputs/Checkbox";
 import { InputEmail } from "../../components/Inputs/InputEmail";
 import { InputPassword } from "../../components/Inputs/InputPassword";
-import { RecoverForm } from "../../components/templates/forms/RecoverForm";
-import { ModalTemplate } from "../../components/templates/ModalTemplate";
 import { PageHeader } from "../../components/templates/PageHeader";
 import { AuthContext } from "../../contexts/AuthContext";
 import { LoginSchema } from "../../schemas/LoginSchema";
-import { styles } from "../../styles/main";
 
 const Index = () => {
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const { signIn, setIsLoading } = useContext(AuthContext);
+  const { signIn, signOut, setIsLoading } = useContext(AuthContext);
 
   const {
     register,
@@ -34,10 +29,13 @@ const Index = () => {
     resolver: yupResolver(LoginSchema()),
   });
 
+  setIsLoading(false);
+
   const onSubmit = async (data: any) => {
     try {
-      signIn(data).then(async () => {
-        navigation.navigate(`Dashboard`);
+      await signIn(data).then(async () => {
+        const user: any = await AsyncStorage.getItem("@Restaurant:user");
+        Alert.alert(user ?? "");
       });
     } catch (e: any) {
       Alert.alert(JSON.stringify(e));
@@ -46,32 +44,13 @@ const Index = () => {
 
   return (
     <SafeAreaView className={`flex-1 bg-themeBgBody`}>
-      <ModalTemplate
-        title="Recuperar senha"
-        visible={modalVisible}
-        setVisible={setModalVisible}
-      >
-        <RecoverForm />
-      </ModalTemplate>
-
       <PageHeader
-        title={"Acessar conta"}
-        subtitle={"Faça login na sua conta!"}
+        title={"Tela Principal"}
+        subtitle={"Gerencie os pedidos de hoje!"}
       />
 
       <ScrollView>
-        <View className="flex-1 px-8 pt-12 justify-center space-y-4  w-full ">
-          <Animatable.View
-            animation={"fadeInDown"}
-            easing={"ease-in-out"}
-            className={`self-center rounded-full w-32 h-32`}
-            style={styles.shadow}
-          >
-            <Image
-              source={logo}
-              className={`self-center rounded-full bg-gray-200 w-32 h-32`}
-            />
-          </Animatable.View>
+        <View className="flex-1 px-8 py-12 justify-center space-y-4  w-full ">
           <View>
             <Controller
               control={control}
@@ -109,24 +88,11 @@ const Index = () => {
               name="password"
             />
           </View>
-          <View className="flex pt-6 items-center justify-between ">
+          <View className="flex pt-8 items-center justify-between ">
             <Checkbox label={`Lembrar-me`} />
           </View>
-          <View className="flex-1self-end pt-8 w-full">
-            <ButtonSolid
-              label={"Entrar"}
-              color={"primary"}
-              onPress={handleSubmit((data: any) => onSubmit(data))}
-            />
-            <View className="flex py-4 items-center">
-              <LinkButton
-                onPress={() => {
-                  setModalVisible(true);
-                  // navigation.navigate("Recover");
-                }}
-                label={`Esqueceu sua senha? Clique AQUI!`}
-              />
-            </View>
+          <View className="flex-1 pt-8 w-full">
+            <ButtonSolid label={"Sair"} color={"primary"} onPress={signOut} />
           </View>
         </View>
       </ScrollView>

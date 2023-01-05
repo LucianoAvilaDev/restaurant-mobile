@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Switch, Text, View } from "react-native";
+import { styles } from "../../styles/main";
 
 export const Checkbox = ({ label, readonly }: any) => {
   const [value, setValue] = useState(true);
@@ -7,6 +8,7 @@ export const Checkbox = ({ label, readonly }: any) => {
   return (
     <View className={`flex flex-row items-center space-x-1`}>
       <Switch
+        style={styles.shadow}
         trackColor={{ false: "#767577", true: "rgb(153, 27, 27)" }}
         thumbColor={
           readonly

@@ -3,13 +3,12 @@ import { Text, View } from "react-native";
 
 type Props = {
   title: string;
-  subtitle: string;
 };
 
-export const ModalHeader = ({ title, subtitle }: Props) => {
+export const ModalHeader = ({ title }: Props) => {
   return (
     <>
-      <View className="flex items-center px-4 rounded-t-2xl bg-themeDarker">
+      <View className="flex items-center px-4 rounded-t-lg bg-themeDarker">
         <Text className="text-white text-2xl py-4">{title}</Text>
       </View>
     </>

@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Luciano\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @TYPES/react-native-dotenv
+  C:\Program Files\nodejs\node.exe C:\Users\Luciano\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/react-native-paper
 
 PATH: 
   C:\Users\Luciano\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Luciano\bin;C:\Python311\Scripts;C:\Python311;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\ComposerSetup\bin;C:\ProgramData\chocolatey\bin;C:\Users\Luciano\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Users\Luciano\AppData\Local\Microsoft\WindowsApps;C:\Users\Luciano\AppData\Local\Programs\Microsoft VS Code\bin;C:\laragon\bin\php\php-8.1.10-Win32-vs16-x64;C:\Users\Luciano\AppData\Roaming\Composer\vendor\bin;C:\Users\Luciano\AppData\Roaming\npm;C:\Users\Luciano\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@TYPES%2freact-native-dotenv: Not found
+  Error: https://registry.yarnpkg.com/@types%2freact-native-paper: Not found
       at params.callback [as _callback] (C:\Users\Luciano\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at self.callback (C:\Users\Luciano\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -40,11 +40,13 @@ npm manifest:
     "dependencies": {
       "@ant-design/icons": "^4.8.0",
       "@hookform/resolvers": "^2.9.10",
+      "@jamsch/react-native-toastify": "^0.1.2",
       "@react-native-async-storage/async-storage": "^1.17.11",
       "@react-native-community/async-storage": "^1.12.1",
       "@react-navigation/native": "^6.1.1",
       "@react-navigation/native-stack": "^6.9.7",
       "@types/antd": "^1.0.0",
+      "@types/react-native-dotenv": "^0.2.0",
       "antd": "^5.1.2",
       "axios": "^1.2.2",
       "expo": "~47.0.9",
@@ -56,6 +58,7 @@ npm manifest:
       "react-native": "0.70.5",
       "react-native-animatable": "^1.3.3",
       "react-native-dotenv": "^3.4.7",
+      "react-native-paper": "^5.1.2",
       "react-native-safe-area-context": "4.4.1",
       "react-native-screens": "~3.18.0",
       "react-native-vector-icons": "^9.2.0",
@@ -1190,6 +1193,14 @@ Lockfile:
       "@babel/helper-validator-identifier" "^7.19.1"
       to-fast-properties "^2.0.0"
   
+  "@callstack/react-theme-provider@^3.0.8":
+    version "3.0.8"
+    resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.8.tgz#d0d7ac71e422133c5f7b78f4c4aa1bc57f156f50"
+    integrity sha512-5U231sYY2sqQOaELX0WBCn+iluV8bFaXIS7em03k4W5Xz0AhGvKlnpLIhDGFP8im/SvNW7/2XoR0BsClhn9t6Q==
+    dependencies:
+      deepmerge "^3.2.0"
+      hoist-non-react-statics "^3.3.0"
+  
   "@ctrl/tinycolor@^3.4.0":
     version "3.5.0"
     resolved "https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-3.5.0.tgz"
@@ -1529,6 +1540,13 @@ Lockfile:
     version "2.9.10"
     resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.10.tgz#e7e88942ee34e97b7bc937b0be4694194c9cd420"
     integrity sha512-JIL1DgJIlH9yuxcNGtyhsWX/PgNltz+5Gr6+8SX9fhXc/hPbEIk6wPI82nhgvp3uUb6ZfAM5mqg/x7KR7NAb+A==
+  
+  "@jamsch/react-native-toastify@^0.1.2":
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/@jamsch/react-native-toastify/-/react-native-toastify-0.1.2.tgz#a17945fb638a8d3c8d135bbe657746f93773cc3f"
+    integrity sha512-sm8CU9wnQ4MhEGQNw8SESlxCpsoF/h0HfaaWQ7F6lVtH3jl64o1uPSLq7h87DLpm15HsWHP+cwv3tPJtQSsdWw==
+    dependencies:
+      zustand "^3.4.1"
   
   "@jest/create-cache-key-function@^29.0.3":
     version "29.3.1"
@@ -2013,6 +2031,11 @@ Lockfile:
     version "15.7.5"
     resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
     integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
+  
+  "@types/react-native-dotenv@^0.2.0":
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/@types/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#32c58422a422c1adf68acce363ed791314d5a8e7"
+    integrity sha512-ZxX+dU/yoQc0jTk+/NWttkiuXceJyN5FpOSqDl0WynN5GDzxwH7OMruQ47qcY8llo2RD3irjvzJ9BwC8gDiq0A==
   
   "@types/react-native-vector-icons@^6.4.12":
     version "6.4.12"
@@ -2889,7 +2912,7 @@ Lockfile:
       map-visit "^1.0.0"
       object-visit "^1.0.0"
   
-  color-convert@^1.9.0:
+  color-convert@^1.9.0, color-convert@^1.9.3:
     version "1.9.3"
     resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
     integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
@@ -2908,10 +2931,26 @@ Lockfile:
     resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz"
     integrity sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==
   
-  color-name@^1.1.4, color-name@~1.1.4:
+  color-name@^1.0.0, color-name@^1.1.4, color-name@~1.1.4:
     version "1.1.4"
     resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
     integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+  
+  color-string@^1.6.0:
+    version "1.9.1"
+    resolved "https://registry.yarnpkg.com/color-string/-/color-string-1.9.1.tgz#4467f9146f036f855b764dfb5bf8582bf342c7a4"
+    integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
+    dependencies:
+      color-name "^1.0.0"
+      simple-swizzle "^0.2.2"
+  
+  color@^3.1.2:
+    version "3.2.1"
+    resolved "https://registry.yarnpkg.com/color/-/color-3.2.1.tgz#3544dc198caf4490c3ecc9a790b54fe9ff45e164"
+    integrity sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==
+    dependencies:
+      color-convert "^1.9.3"
+      color-string "^1.6.0"
   
   colorette@^1.0.7:
     version "1.4.0"
@@ -4016,6 +4055,13 @@ Lockfile:
     dependencies:
       source-map "^0.7.3"
   
+  hoist-non-react-statics@^3.3.0:
+    version "3.3.2"
+    resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+    integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
+    dependencies:
+      react-is "^16.7.0"
+  
   hosted-git-info@^3.0.2:
     version "3.0.8"
     resolved "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-3.0.8.tgz"
@@ -4182,6 +4228,11 @@ Lockfile:
     version "0.2.1"
     resolved "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.2.1.tgz"
     integrity sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
+  
+  is-arrayish@^0.3.1:
+    version "0.3.2"
+    resolved "https://registry.yarnpkg.com/is-arrayish/-/is-arrayish-0.3.2.tgz#4574a2ae56f7ab206896fb431eaeed066fdf8f03"
+    integrity sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==
   
   is-binary-path@~2.1.0:
     version "2.1.0"
@@ -6351,7 +6402,7 @@ Lockfile:
     resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.41.5.tgz"
     integrity sha512-DAKjSJ7X9f16oQrP3TW2/eD9N6HOgrmIahP4LOdFphEWVfGZ2LulFd6f6AQ/YS/0cx/5oc4j8a1PXxuaurWp/Q==
   
-  react-is@^16.12.0, react-is@^16.13.0, react-is@^16.13.1:
+  react-is@^16.12.0, react-is@^16.13.0, react-is@^16.13.1, react-is@^16.7.0:
     version "16.13.1"
     resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
     integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -6394,6 +6445,15 @@ Lockfile:
     version "0.70.3"
     resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
     integrity sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A==
+  
+  react-native-paper@^5.1.2:
+    version "5.1.2"
+    resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.1.2.tgz#695e273871b17b908299029adadb72492271e586"
+    integrity sha512-muf70CPtji6gTukV+9ecvzOYFOflK2hi4t4GLt9y4Ynhf/YQCvXsefPTp45n7RS6bz9+ueG4jtuGg64oOY8dxA==
+    dependencies:
+      "@callstack/react-theme-provider" "^3.0.8"
+      color "^3.1.2"
+      use-event-callback "^0.1.0"
   
   react-native-safe-area-context@4.4.1:
     version "4.4.1"
@@ -6921,6 +6981,13 @@ Lockfile:
       bplist-creator "0.1.0"
       bplist-parser "0.3.1"
       plist "^3.0.5"
+  
+  simple-swizzle@^0.2.2:
+    version "0.2.2"
+    resolved "https://registry.yarnpkg.com/simple-swizzle/-/simple-swizzle-0.2.2.tgz#a4da6b635ffcccca33f70d17cb92592de95e557a"
+    integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
+    dependencies:
+      is-arrayish "^0.3.1"
   
   sisteransi@^1.0.5:
     version "1.0.5"
@@ -7603,6 +7670,11 @@ Lockfile:
       querystringify "^2.1.1"
       requires-port "^1.0.0"
   
+  use-event-callback@^0.1.0:
+    version "0.1.0"
+    resolved "https://registry.yarnpkg.com/use-event-callback/-/use-event-callback-0.1.0.tgz#29d7ce996802935c5387e7d3b606cf316da3457f"
+    integrity sha512-5fTzY5UEXHMK5UR0NRkUz6TPfWmmX9fO8Tx3SnHrfMPdrQ7Rna0gDBy0r56SP68TwsP9DgwSBzeysCu3A/Z2NA==
+  
   use-latest-callback@^0.1.5:
     version "0.1.5"
     resolved "https://registry.npmjs.org/use-latest-callback/-/use-latest-callback-0.1.5.tgz"
@@ -7884,3 +7956,8 @@ Lockfile:
       nanoclone "^0.2.1"
       property-expr "^2.0.4"
       toposort "^2.0.2"
+  
+  zustand@^3.4.1:
+    version "3.7.2"
+    resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.7.2.tgz#7b44c4f4a5bfd7a8296a3957b13e1c346f42514d"
+    integrity sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==

@@ -2,10 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { AuthContext } from "../contexts/AuthContext";
-import Recover from "../screens/Recover";
-
-import SignIn from "../screens/SignIn";
-import Welcome from "../screens/Welcome";
+import Dashboard from "../screens/Dashboard";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,23 +19,13 @@ export default function AuthRoutes() {
   return (
     <Stack.Navigator
       screenOptions={{
-        animation: "slide_from_bottom",
+        animation: "slide_from_left",
         animationDuration: 100,
       }}
     >
       <Stack.Screen
-        name="Welcome"
-        component={Welcome}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Recover"
-        component={Recover}
+        name="Dashboard"
+        component={Dashboard}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

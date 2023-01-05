@@ -1,7 +1,7 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
-import logo from "../../assets/logo2.png";
-
+import { Text, View } from "react-native";
+import * as Animatable from "react-native-animatable";
+import { styles } from "../../styles/main";
 type Props = {
   title: string;
   subtitle: string;
@@ -10,15 +10,21 @@ type Props = {
 export const PageHeader = ({ title, subtitle }: Props) => {
   return (
     <>
-      <View className="absolute w-full h-48 px-4 bg-themeDarker"></View>
+      <View className="absolute w-full h-24 px-4 bg-themeDarker"></View>
 
-      <View className="flex items-center py-6 px-5 w-full rounded-b-full bg-themeMedium">
-        <Text className="text-white text-4xl pt-4">{title}</Text>
-        <Text className="text-white text-base font-light pt-2 pb-6 text-center">
+      <Animatable.View
+        animation="slideInRight"
+        easing="ease-out"
+        duration={500}
+        delay={400}
+        style={styles.shadow}
+        className="flex items-end py-2 px-8 w-full rounded-bl-full bg-themeMedium"
+      >
+        <Text className="text-white text-4xl py-1">{title}</Text>
+        <Text className="text-white text-base font-light pb-6 text-center">
           {subtitle}
         </Text>
-        <Image source={logo} className={`w-20 h-20`} />
-      </View>
+      </Animatable.View>
     </>
   );
 };

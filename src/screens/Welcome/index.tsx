@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { Image, SafeAreaView, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import bg from "../../assets/foto.jpg";
@@ -8,12 +8,6 @@ import { ButtonSolid } from "../../components/Buttons/ButtonSolid";
 
 const Index = () => {
   const navigation = useNavigation();
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
 
   return (
     <SafeAreaView className={`flex-1 w-full items-center`}>

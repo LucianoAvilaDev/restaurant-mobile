@@ -5,7 +5,13 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { styles } from "../../styles/main";
 import { ModalHeader } from "./ModalHeader";
 
-export const ModalTemplate = ({ visible, setVisible, children }: any) => {
+export const ModalTemplate = ({
+  visible,
+  setVisible,
+  title,
+  subtitle,
+  children,
+}: any) => {
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
       <View className="bg-black/50 flex-1 justify-center items-center">
@@ -13,7 +19,7 @@ export const ModalTemplate = ({ visible, setVisible, children }: any) => {
           animation={"slideInUp"}
           easing="ease-in-out"
           duration={300}
-          className="bg-white w-[80vw] rounded-2xl "
+          className="bg-white w-[80vw] rounded-lg "
           style={styles.shadow}
         >
           <TouchableOpacity
@@ -25,7 +31,7 @@ export const ModalTemplate = ({ visible, setVisible, children }: any) => {
             </View>
           </TouchableOpacity>
 
-          <ModalHeader title="Recuperar senha" subtitle="" />
+          <ModalHeader title={title} />
           {children}
         </Animatable.View>
       </View>
