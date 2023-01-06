@@ -11,4 +11,9 @@ export const styles: any = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  truncate: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
 });

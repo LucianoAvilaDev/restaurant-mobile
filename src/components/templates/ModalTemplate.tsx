@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, TouchableOpacity, View } from "react-native";
+import { Modal, TouchableHighlight, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Icon from "react-native-vector-icons/AntDesign";
 import { styles } from "../../styles/main";
@@ -19,17 +19,18 @@ export const ModalTemplate = ({
           animation={"slideInUp"}
           easing="ease-in-out"
           duration={300}
-          className="bg-white w-[80vw] rounded-lg "
+          className="bg-white w-[80vw] rounded-md "
           style={styles.shadow}
         >
-          <TouchableOpacity
-            className="absolute w-full items-end z-10"
+          <TouchableHighlight
+            underlayColor={"rgba(200 ,200, 200 , 0.7)"}
+            className="z-20 rounded-full items-center bg-transparent w-8 p-1 top-1 right-1 absolute"
             onPress={() => setVisible(false)}
           >
-            <View className="absolute w-full items-end z-10 p-2 rounded-full">
-              <Icon name="close" size={20} color="white" />
+            <View className="rounded-full items-center">
+              <Icon name="close" size={22} color="white" />
             </View>
-          </TouchableOpacity>
+          </TouchableHighlight>
 
           <ModalHeader title={title} />
           {children}

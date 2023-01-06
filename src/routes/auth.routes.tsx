@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { AuthContext } from "../contexts/AuthContext";
 import Dashboard from "../screens/Dashboard";
+import Welcome from "../screens/Welcome";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,10 +20,15 @@ export default function AuthRoutes() {
   return (
     <Stack.Navigator
       screenOptions={{
-        animation: "slide_from_left",
+        animation: "slide_from_bottom",
         animationDuration: 100,
       }}
     >
+      <Stack.Screen
+        name="Welcome"
+        component={Welcome}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}

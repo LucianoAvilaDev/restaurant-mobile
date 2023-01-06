@@ -1,46 +1,104 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Alert, SafeAreaView, ScrollView, View } from "react-native";
-import { ButtonSolid } from "../../components/Buttons/ButtonSolid";
-import { Checkbox } from "../../components/Inputs/Checkbox";
-import { InputEmail } from "../../components/Inputs/InputEmail";
-import { InputPassword } from "../../components/Inputs/InputPassword";
+import { AxiosError } from "axios";
+import moment from "moment";
+import { useContext, useEffect, useState } from "react";
+import {
+  Alert,
+  BackHandler,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
+import * as Animatable from "react-native-animatable";
+import uuid from "react-native-uuid";
+import SmallCard from "../../components/Cards/SmallCard";
+import DashboardTable from "../../components/templates/DashboardTable";
 import { PageHeader } from "../../components/templates/PageHeader";
 import { AuthContext } from "../../contexts/AuthContext";
-import { LoginSchema } from "../../schemas/LoginSchema";
+import { LongText } from "../../Labels/LongText";
+import { api } from "../../services/api";
+import { CardType } from "../../types/CardType";
+import { ClientType } from "../../types/ClientType";
+import { OrderType } from "../../types/OrderType";
+import { SelectType } from "../../types/SelectType";
+import { TableType } from "../../types/TableType";
 
 const Index = () => {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
 
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const { user, signIn, signOut, setIsLoading } = useContext(AuthContext);
 
-  const { signIn, signOut, setIsLoading } = useContext(AuthContext);
+  let delayTime: number = 150;
+  let tablesDelay: number = 550;
 
-  const {
-    register,
-    control,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(LoginSchema()),
+  BackHandler.addEventListener("hardwareBackPress", () => {
+    navigation.navigate(`Welcome`);
+    return true;
   });
 
-  setIsLoading(false);
+  const [tableCards, setTableCards] = useState<CardType[]>([]);
+  const [orderCards, setOrderCards] = useState<CardType[]>([]);
+  const [tables, setTables] = useState<any[]>([]);
+  const [clients, setClients] = useState<SelectType[]>([]);
 
-  const onSubmit = async (data: any) => {
-    try {
-      await signIn(data).then(async () => {
-        const user: any = await AsyncStorage.getItem("@Restaurant:user");
-        Alert.alert(user ?? "");
-      });
-    } catch (e: any) {
-      Alert.alert(JSON.stringify(e));
-    }
+  const GetClients = async () => {
+    await api.get("clients").then(({ data }: any) => {
+      setClients(
+        data.map((client: ClientType) => {
+          return {
+            value: client.id,
+            label: client.name,
+          };
+        })
+      );
+    });
   };
+
+  const getData = async () => {
+    await api
+      .get("tables")
+      .then(({ data }: any) => {
+        const occupiedTables = data.filter(
+          (table: TableType) => !table.is_available
+        ).length;
+        setTableCards([
+          {
+            title: "Mesas Ocupadas",
+            value: `${occupiedTables} / ${data.length}`,
+          },
+          {
+            title: "Mesas Disponíveis",
+            value: `${data.length - occupiedTables} / ${data.length}`,
+          },
+        ]);
+      })
+      .catch((e: AxiosError) => Alert.alert(JSON.stringify(e.response?.data)));
+
+    await api
+      .post("orders/filters", { date: moment().format("YYYY-MM-DD") })
+      .then(({ data }: any) => {
+        const openOrders = data.filter(
+          (order: OrderType) => !order.is_closed
+        ).length;
+        setOrderCards([
+          {
+            title: "Pedidos abertos",
+            value: `${openOrders} / ${data.length}`,
+          },
+        ]);
+      })
+      .catch((e: AxiosError) => Alert.alert(e.response?.data as string));
+
+    await api.get("all-tables-and-orders").then(({ data }) => {
+      setTables(data);
+    });
+  };
+
+  useEffect(() => {
+    GetClients();
+    getData();
+  }, []);
 
   return (
     <SafeAreaView className={`flex-1 bg-themeBgBody`}>
@@ -49,50 +107,79 @@ const Index = () => {
         subtitle={"Gerencie os pedidos de hoje!"}
       />
 
-      <ScrollView>
-        <View className="flex-1 px-8 py-12 justify-center space-y-4  w-full ">
+      <ScrollView className="my-4 ">
+        <View className="flex-1 px-6 py-4 justify-center space-y-4  w-full ">
           <View>
-            <Controller
-              control={control}
-              render={({ field: { onBlur, value } }) => (
-                <View>
-                  <InputEmail
-                    register={register("email")}
-                    onChange={(text: string) => setValue("email", text)}
-                    onBlur={onBlur}
-                    value={value}
-                    label="E-mail"
-                    placeholder="Digite o E-mail..."
-                    errorMessage={errors?.email?.message}
-                  />
-                </View>
-              )}
-              name="email"
-            />
+            <Text className="font-normal text-lg">
+              Bem-vindo,{" "}
+              <LongText className="text-xl italic font-bold">
+                {`${user?.name}`}
+              </LongText>
+            </Text>
           </View>
           <View>
-            <Controller
-              control={control}
-              render={({ field: { onBlur, value } }) => (
-                <View>
-                  <InputPassword
-                    register={register("password")}
-                    onChange={(text: string) => setValue("password", text)}
-                    value={value}
-                    label="Senha"
-                    placeholder="Digite a Senha..."
-                    errorMessage={errors?.password?.message}
+            <View>
+              <View className="px-2 space-y-4 py-4">
+                {[...tableCards, ...orderCards].map((card: CardType) => {
+                  delayTime += 150;
+                  return (
+                    <Animatable.View
+                      animation="fadeInLeftBig"
+                      duration={300}
+                      delay={delayTime}
+                      key={`${uuid.v4()}`}
+                    >
+                      <SmallCard title={`${card.title}`} value={card.value} />
+                    </Animatable.View>
+                  );
+                })}
+              </View>
+            </View>
+          </View>
+          <View
+            className={`flex-1 flex-row flex-wrap w-full justify-between items-center `}
+          >
+            {tables.map((table: any) => {
+              tablesDelay += 150;
+              return (
+                <Animatable.View
+                  animation="fadeInUpBig"
+                  easing="ease-in-out"
+                  delay={tablesDelay}
+                  duration={400}
+                  key={`${uuid.v4()}`}
+                  className="px-2"
+                >
+                  <DashboardTable
+                    table={table}
+                    onPress={async () => {
+                      if (!user?.permissions.includes("manage_orders")) return;
+                      await Promise
+                        .resolve
+                        // setModalTemplate(
+                        //   <FormOrders
+                        //     clients={clients}
+                        //     id={
+                        //       table.orders
+                        //         ? table.orders[0].id
+                        //         : undefined
+                        //     }
+                        //     handleClear={async () => {
+                        //       getData();
+                        //     }}
+                        //     setModal={setModal}
+                        //     table={table}
+                        //   />
+                        // )
+                        ()
+                        .then(() => {
+                          // setModal(true);
+                        });
+                    }}
                   />
-                </View>
-              )}
-              name="password"
-            />
-          </View>
-          <View className="flex pt-8 items-center justify-between ">
-            <Checkbox label={`Lembrar-me`} />
-          </View>
-          <View className="flex-1 pt-8 w-full">
-            <ButtonSolid label={"Sair"} color={"primary"} onPress={signOut} />
+                </Animatable.View>
+              );
+            })}
           </View>
         </View>
       </ScrollView>

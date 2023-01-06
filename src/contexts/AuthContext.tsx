@@ -1,33 +1,37 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AxiosResponse } from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { api } from "../services/api";
 import { AuthContextType } from "../types/AuthContextType";
+import { LoggedUserType } from "../types/LoggedUserType";
 import { SignInType } from "../types/SignInType";
-
-type UserType = {
-  id: string | number;
-  name: string;
-  email: string;
-  permissions: string[];
-};
+import { CheckInternetConnection } from "../utils/CheckInternetConnection";
 
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: any) {
-  const [user, setUser] = useState<UserType | null>(null);
+  const [user, setUser] = useState<LoggedUserType | null>(null);
   const [ref, setRef] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isAuthenticated = !!user;
 
   useEffect(() => {
+    if (!CheckInternetConnection()) {
+      Alert.alert(
+        `Falha na Conexão`,
+        "Verifique a sua conexão com a internet!"
+      );
+      return;
+    }
     const loadData = async () => {
       const storagedUser = await AsyncStorage.getItem("@Restaurant:user");
       const storagedToken = await AsyncStorage.getItem("@Restaurant:token");
 
       if (storagedUser && storagedToken) {
         setUser(JSON.parse(storagedUser));
+        api.defaults.headers["Authorization"] = `bearer ${storagedToken}`;
       }
     };
 
@@ -37,7 +41,7 @@ export function AuthProvider({ children }: any) {
   }, []);
 
   const signIn = async (data: SignInType) => {
-    const { token, user } = await api
+    const { token, user }: any = await api
       .post("login", {
         ...data,
       })
@@ -48,7 +52,7 @@ export function AuthProvider({ children }: any) {
 
     api.defaults.headers["Authorization"] = `bearer ${token}`;
 
-    setUser(user);
+    setUser(user as LoggedUserType);
   };
 
   const signOut = async () => {

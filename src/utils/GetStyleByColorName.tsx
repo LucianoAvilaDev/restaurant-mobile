@@ -7,7 +7,7 @@ export const GetStyleByColorName = (color: string) => {
       return "bg-gray-700 text-white focus:bg-black hover:bg-gray-500";
 
     case "default":
-      return "bg-gray-100 text-themeMedium focus:bg-gray-200 hover:bg-gray-50";
+      return "border-gray-100 border-2 bg-black/50 text-gray-100 ";
 
     case "success":
       return "bg-green-600 text-white focus:bg-green-800 hover:bg-green-400";

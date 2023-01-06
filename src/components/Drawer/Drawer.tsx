@@ -1,50 +1,31 @@
-import { useRef, useState } from "react";
-import { Button, DrawerLayoutAndroid, Text, View } from "react-native";
+import { useRef } from "react";
+import { DrawerLayoutAndroid, TouchableHighlight, View } from "react-native";
+import Icon from "react-native-vector-icons/Entypo";
+import { DrawerMenu } from "../Drawer/DrawerMenu";
 
 export const Drawer = ({ children }: any) => {
-  const drawer = useRef(null);
-  const [drawerPosition, setDrawerPosition] = useState<
-    "left" | "right" | undefined
-  >("left");
-  const changeDrawerPosition = () => {
-    if (drawerPosition === "left") {
-      setDrawerPosition("right");
-    } else {
-      setDrawerPosition("left");
-    }
-  };
+  const drawer = useRef<any>();
 
-  const navigationView = () => (
-    <View className={`flex-1 items-center p-16 justify-center bg-[#ecf0f1]`}>
-      <Text className={`bg-green-500 text-center`}>{children}</Text>
-      <Button
-        title="Close drawer"
-        onPress={() => drawer.current.closeDrawer()}
-      />
-    </View>
-  );
+  const navigationView = () => <DrawerMenu drawer={drawer} />;
 
   return (
     <DrawerLayoutAndroid
       ref={drawer}
       drawerWidth={300}
-      drawerPosition={drawerPosition}
+      drawerPosition={"right"}
       renderNavigationView={navigationView}
     >
-      <View className={`flex-1 items-center p-16 justify-center bg-[#ecf0f1]`}>
-        <Text>Drawer on the {drawerPosition}!</Text>
-        <Button
-          title="Change Drawer Position"
-          onPress={() => changeDrawerPosition()}
-        />
-        <Text className={`p-16 text-center`}>
-          Swipe from the side or press button below to see it!
-        </Text>
-        <Button
-          title="Open drawer"
-          onPress={() => drawer.current.openDrawer()}
-        />
-      </View>
+      <TouchableHighlight
+        underlayColor={"rgba(200 ,200, 200 , 0.7)"}
+        className="z-20 rounded-full top-3 items-center bg-transparent w-10 p-2 right-1 absolute"
+        onPress={() => drawer.current.openDrawer()}
+      >
+        <View className="rounded-full items-center">
+          <Icon name="dots-three-vertical" color="white" size={22} />
+        </View>
+      </TouchableHighlight>
+
+      {children}
     </DrawerLayoutAndroid>
   );
 };

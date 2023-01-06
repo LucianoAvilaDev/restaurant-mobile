@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableHighlight } from "react-native";
 import { styles } from "../../styles/main";
 import { GetStyleByColorName } from "../../utils/GetStyleByColorName";
 
@@ -21,8 +21,9 @@ export const ButtonSolid = ({ label, color, type, onPress }: Props) => {
   const styleButton: string = GetStyleByColorName(color);
 
   return (
-    <TouchableOpacity
-      className="border-transparent active:opacity-70"
+    <TouchableHighlight
+      underlayColor={"rgba(200 ,200, 200 , 0.7)"}
+      className="border-transparent rounded-full active:opacity-70"
       onPress={async () => {
         onPress ? await onPress() : null;
       }}
@@ -33,6 +34,6 @@ export const ButtonSolid = ({ label, color, type, onPress }: Props) => {
       >
         {label}
       </Text>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };

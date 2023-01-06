@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import * as Animatable from "react-native-animatable";
+import { LongText } from "../../Labels/LongText";
 import { styles } from "../../styles/main";
 type Props = {
   title: string;
@@ -10,20 +11,26 @@ type Props = {
 export const PageHeader = ({ title, subtitle }: Props) => {
   return (
     <>
-      <View className="absolute w-full h-24 px-4 bg-themeDarker"></View>
+      <Animatable.View
+        animation="fadeInLeftBig"
+        delay={200}
+        duration={500}
+        easing="ease-in-out"
+        className="absolute items-center h-28 rounded-r-full w-full bg-themeDarker"
+      />
 
       <Animatable.View
-        animation="slideInRight"
-        easing="ease-out"
+        animation="slideInDown"
+        easing="ease-in-out"
         duration={500}
-        delay={400}
+        delay={300}
         style={styles.shadow}
-        className="flex items-end py-2 px-8 w-full rounded-bl-full bg-themeMedium"
+        className="flex items-start rounded-bl-full left-4 space-y-1 py-4 px-10 w-auto bg-themeMedium"
       >
-        <Text className="text-white text-4xl py-1">{title}</Text>
-        <Text className="text-white text-base font-light pb-6 text-center">
+        <Text className="text-white text-3xl">{title}</Text>
+        <LongText className="text-white font-light left-7 text-base">
           {subtitle}
-        </Text>
+        </LongText>
       </Animatable.View>
     </>
   );

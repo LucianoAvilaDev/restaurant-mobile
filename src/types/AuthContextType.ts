@@ -1,3 +1,4 @@
+import { LoggedUserType } from "./LoggedUserType";
 import { SignInType } from "./SignInType";
 
 export type AuthContextType = {
@@ -6,7 +7,7 @@ export type AuthContextType = {
     setRef: Function;
     isLoading: boolean;
     setIsLoading: Function;
-    user: object | null;
+    user: LoggedUserType | null;
     signIn: (data: SignInType) => Promise<void>;
     signOut: () => Promise<void>;
 };

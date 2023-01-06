@@ -23,7 +23,6 @@ export default function AppRoutes() {
     <Stack.Navigator
       screenOptions={{
         animation: "slide_from_bottom",
-        animationDuration: 100,
       }}
     >
       <Stack.Screen

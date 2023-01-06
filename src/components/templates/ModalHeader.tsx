@@ -8,8 +8,8 @@ type Props = {
 export const ModalHeader = ({ title }: Props) => {
   return (
     <>
-      <View className="flex items-center px-4 rounded-t-lg bg-themeDarker">
-        <Text className="text-white text-2xl py-4">{title}</Text>
+      <View className="flex items-center px-4 rounded-t-md bg-themeDarker">
+        <Text className="text-white font-semibold text-xl py-4">{title}</Text>
       </View>
     </>
   );
