@@ -43,16 +43,24 @@ const Index = () => {
   const [clients, setClients] = useState<SelectType[]>([]);
 
   const GetClients = async () => {
-    await api.get("clients").then(({ data }: any) => {
-      setClients(
-        data.map((client: ClientType) => {
-          return {
-            value: client.id,
-            label: client.name,
-          };
-        })
-      );
-    });
+    await api
+      .get("clients")
+      .then(({ data }: any) => {
+        setClients(
+          data.map((client: ClientType) => {
+            return {
+              value: client.id,
+              label: client.name,
+            };
+          })
+        );
+      })
+      .catch((e: AxiosError) => {
+        if (e.response?.status == 401) {
+          signOut();
+          navigation.navigate(`Welcome`);
+        }
+      });
   };
 
   const getData = async () => {
@@ -73,7 +81,12 @@ const Index = () => {
           },
         ]);
       })
-      .catch((e: AxiosError) => Alert.alert(JSON.stringify(e.response?.data)));
+      .catch((e: AxiosError) => {
+        if (e.response?.status == 401) {
+          signOut();
+          navigation.navigate(`Welcome`);
+        }
+      });
 
     await api
       .post("orders/filters", { date: moment().format("YYYY-MM-DD") })

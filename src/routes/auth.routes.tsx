@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { AuthContext } from "../contexts/AuthContext";
 import Dashboard from "../screens/Dashboard";
+import Tables from "../screens/Tables";
 import Welcome from "../screens/Welcome";
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,11 @@ export default function AuthRoutes() {
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Tables"
+        component={Tables}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
