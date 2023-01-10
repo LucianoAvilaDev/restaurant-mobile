@@ -1,29 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import {
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
-import * as Animatable from "react-native-animatable";
-import { DataTable } from "react-native-paper";
+import React, { useLayoutEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Alert, SafeAreaView, ScrollView, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import uuid from "uuid";
 import BadgeGreen from "../../components/Badges/BadgeGreen";
 import BadgeRed from "../../components/Badges/BadgeRed";
-import { ButtonSolidSmall } from "../../components/Buttons/ButtonSolidSmall";
-import InputSelect from "../../components/Inputs/InputSelect";
-import { InputText } from "../../components/Inputs/InputText";
-import { ModalTemplate } from "../../components/templates/ModalTemplate";
+import { TableFull } from "../../components/Tables/TableFull";
+import { FilterTemplate } from "../../components/templates/filters/FilterTemplate";
+import { TablesFilters } from "../../components/templates/filters/form-filters/TablesFilters";
 import { PageHeader } from "../../components/templates/PageHeader";
 import { TablesSchema } from "../../schemas/TablesSchema";
 import { api } from "../../services/api";
-import { styles } from "../../styles/main";
-import { SelectType } from "../../types/SelectType";
 import { TableType } from "../../types/TableType";
 
 const Index = () => {
@@ -43,17 +30,6 @@ const Index = () => {
   } = useForm({
     resolver: yupResolver(TablesSchema()),
   });
-
-  const options: SelectType[] = [
-    {
-      key: "true",
-      value: "Disponível",
-    },
-    {
-      key: "false",
-      value: "Indisponível",
-    },
-  ];
 
   const columns: any = [
     {
@@ -115,19 +91,6 @@ const Index = () => {
       Alert.alert(JSON.stringify(e));
     }
   };
-  const [page, setPage] = React.useState<number>(0);
-
-  const numberOfItemsPerPageList = [2, 3, 4];
-
-  const [numberOfItemsPerPage, onItemsPerPageChange] = useState(
-    numberOfItemsPerPageList[0]
-  );
-  const from = page * numberOfItemsPerPage;
-  const to = Math.min((page + 1) * numberOfItemsPerPage, data.length);
-
-  useEffect(() => {
-    setPage(0);
-  }, [numberOfItemsPerPage]);
 
   useLayoutEffect(() => {
     getTables();
@@ -135,13 +98,13 @@ const Index = () => {
 
   return (
     <SafeAreaView className={`flex-1 bg-themeBgBody`}>
-      <ModalTemplate
+      {/* <ModalTemplate
         title="Recuperar senha"
         visible={modalVisible}
         setVisible={setModalVisible}
       >
         <></>
-      </ModalTemplate>
+      </ModalTemplate> */}
 
       <PageHeader
         title={"Mesas"}
@@ -149,150 +112,26 @@ const Index = () => {
       />
 
       <ScrollView className="w-full">
-        <View className="flex-1 px-4 py-4 space-y-2 justify-center  w-full ">
+        <View className="flex-1 px-4 py-4 justify-center  w-full ">
           {/* --------------FILTERS ------------------------------ */}
           <View>
-            <View className="flex justify-start items-start space-x-2">
-              <View className="flex flex-row py-3 items-center ">
-                <Text className="text-lg font-semibold">Filtros</Text>
-                <TouchableHighlight
-                  className="rounded-full p-2"
-                  underlayColor={"rgba(200 ,200, 200 , 0.7)"}
-                  onPress={() => {
-                    if (open) {
-                      setAnimation("zoomOut");
-                      setTimeout(() => {
-                        setOpen(false);
-                      }, 200);
-                    } else {
-                      setOpen(true);
-                      setAnimation("zoomIn");
-                    }
-                  }}
-                >
-                  <View
-                    className={`${
-                      open ? "rotate-180" : "rotate-0"
-                    } transition-transform`}
-                  >
-                    <Icon color="black" size={14} name="chevron-down" />
-                  </View>
-                </TouchableHighlight>
-              </View>
-            </View>
-            {open && (
-              <Animatable.View
-                animation={animation}
-                duration={300}
-                style={styles.shadow}
-                className="bg-gray-100 border-gray-300 rounded-md p-4 space-y-2"
-              >
-                <View>
-                  <Controller
-                    control={control}
-                    render={({ field: { onBlur, value } }) => (
-                      <View>
-                        <InputText
-                          register={register("number")}
-                          placeholder={"Pesquise pelo número..."}
-                          label={"Número"}
-                        />
-                      </View>
-                    )}
-                    name="number"
-                  />
-                </View>
-                <View>
-                  <Controller
-                    control={control}
-                    render={({ field: { onBlur, value } }) => (
-                      <View>
-                        <InputSelect
-                          register={register("isAvailable")}
-                          name={"isAvailable"}
-                          placeholder={"Selecione a situação..."}
-                          label={"Situação"}
-                          options={options}
-                          setValue={setValue}
-                        />
-                      </View>
-                    )}
-                    name="number"
-                  />
-                </View>
-
-                <View
-                  className={`flex flex-row w-full space-x-2 items-center justify-end`}
-                >
-                  <View className="w-32">
-                    <ButtonSolidSmall
-                      label={"Pesquisar"}
-                      color={"secondary"}
-                      onPress={handleSubmit((data: any) => onSubmit(data))}
-                    />
-                  </View>
-                  <View className="w-32">
-                    <ButtonSolidSmall
-                      label={"Limpar"}
-                      color={"warning"}
-                      onPress={() => handleClear()}
-                    />
-                  </View>
-                </View>
-              </Animatable.View>
-            )}
+            <FilterTemplate>
+              <TablesFilters
+                control={control}
+                register={register}
+                setValue={setValue}
+                handleClear={handleClear}
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+              />
+            </FilterTemplate>
           </View>
           {/* ----------------------------------------------------- */}
 
           {/* -------------CONTENT --------------------------------*/}
-
           <View>
-            <DataTable
-              style={{ ...styles.shadow }}
-              className="w-full bg-white rounded-lg "
-            >
-              <DataTable.Header className="bg-themeDark m-1 rounded-md">
-                {columns.map((column: any) => (
-                  <DataTable.Title
-                    style={{ width: column.width }}
-                    key={uuid.v4()}
-                    className="flex items-center justify-center"
-                  >
-                    <Text className="flex text-white text-sm font-bold">
-                      {column.name}
-                    </Text>
-                  </DataTable.Title>
-                ))}
-              </DataTable.Header>
-
-              {data.map((row: any) => (
-                <DataTable.Row key={uuid.v4()}>
-                  {columns.map((column: any) => (
-                    <DataTable.Cell
-                      className="justify-center"
-                      style={{ width: column.width ?? "100%" }}
-                      key={uuid.v4()}
-                    >
-                      {row[`${column.key}`]}
-                    </DataTable.Cell>
-                  ))}
-                </DataTable.Row>
-              ))}
-
-              <DataTable.Pagination
-                page={page}
-                numberOfPages={Math.ceil(data.length / numberOfItemsPerPage)}
-                onPageChange={(page) => setPage(page)}
-                label={`${from + 1}-${to} of ${data.length}`}
-                showFastPaginationControls
-                numberOfItemsPerPageList={numberOfItemsPerPageList}
-                numberOfItemsPerPage={numberOfItemsPerPage}
-                onItemsPerPageChange={onItemsPerPageChange}
-                selectPageDropdownLabel={"Rows per page"}
-              />
-            </DataTable>
+            <TableFull columns={columns} rows={data} />
           </View>
-
           {/* ----------------------------------------------------- */}
         </View>
       </ScrollView>
