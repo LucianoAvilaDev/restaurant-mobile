@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { api } from "../services/api";
@@ -12,10 +12,11 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<LoggedUserType | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [ref, setRef] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!user || !!token;
 
   useEffect(() => {
     if (!CheckInternetConnection()) {
@@ -26,12 +27,9 @@ export function AuthProvider({ children }: any) {
       return;
     }
     const loadData = async () => {
-      const storagedUser = await AsyncStorage.getItem("@Restaurant:user");
-      const storagedToken = await AsyncStorage.getItem("@Restaurant:token");
-
-      if (storagedUser && storagedToken) {
-        setUser(JSON.parse(storagedUser));
-        api.defaults.headers["Authorization"] = `bearer ${storagedToken}`;
+      if (user && token) {
+        setUser(user)
+        setToken(token)
       }
     };
 
@@ -41,22 +39,25 @@ export function AuthProvider({ children }: any) {
   }, []);
 
   const signIn = async (data: SignInType) => {
-    const { token, user }: any = await api
+    await AsyncStorage.setItem("@Restaurant:token", 'piu');
+
+    const { token, user }: any = await api()
       .post("login", {
         ...data,
       })
-      .then((response: AxiosResponse) => response.data);
+      .then((response: AxiosResponse) => response.data)
+      .catch((e: AxiosError) => console.log(e));
 
     await AsyncStorage.setItem("@Restaurant:user", JSON.stringify(user));
     await AsyncStorage.setItem("@Restaurant:token", token);
 
-    api.defaults.headers["Authorization"] = `bearer ${token}`;
-
     setUser(user as LoggedUserType);
+    setToken(token);
   };
 
   const signOut = async () => {
     AsyncStorage.clear().then(() => {
+      setToken(null);
       setUser(null);
     });
   };
@@ -66,6 +67,7 @@ export function AuthProvider({ children }: any) {
       value={{
         isAuthenticated,
         user,
+        token,
         signIn,
         ref,
         setRef,

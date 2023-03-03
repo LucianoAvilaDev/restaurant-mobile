@@ -4,6 +4,7 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import {
   Alert,
+  AsyncStorage,
   BackHandler,
   SafeAreaView,
   ScrollView,
@@ -27,7 +28,7 @@ import { TableType } from "../../types/TableType";
 const Index = () => {
   const navigation: any = useNavigation();
 
-  const { user, signIn, signOut, setIsLoading } = useContext(AuthContext);
+  const { user, token, signIn, signOut, setIsLoading } = useContext(AuthContext);
 
   let delayTime: number = 150;
   let tablesDelay: number = 550;
@@ -43,7 +44,8 @@ const Index = () => {
   const [clients, setClients] = useState<SelectType[]>([]);
 
   const GetClients = async () => {
-    await api
+    
+    await api(token )
       .get("clients")
       .then(({ data }: any) => {
         setClients(
@@ -64,7 +66,8 @@ const Index = () => {
   };
 
   const getData = async () => {
-    await api
+   
+    await api(token )
       .get("tables")
       .then(({ data }: any) => {
         const occupiedTables = data.filter(
@@ -88,7 +91,7 @@ const Index = () => {
         }
       });
 
-    await api
+    await api(token )
       .post("orders/filters", { date: moment().format("YYYY-MM-DD") })
       .then(({ data }: any) => {
         const openOrders = data.filter(
@@ -103,7 +106,7 @@ const Index = () => {
       })
       .catch((e: AxiosError) => Alert.alert(e.response?.data as string));
 
-    await api.get("all-tables-and-orders").then(({ data }) => {
+    await api(token ).get("all-tables-and-orders").then(({ data }) => {
       setTables(data);
     });
   };

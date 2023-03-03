@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Alert, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Alert, AsyncStorage, SafeAreaView, ScrollView, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import BadgeGreen from "../../components/Badges/BadgeGreen";
 import BadgeRed from "../../components/Badges/BadgeRed";
@@ -9,6 +9,7 @@ import { TableFull } from "../../components/Tables/TableFull";
 import { FilterTemplate } from "../../components/templates/filters/FilterTemplate";
 import { TablesFilters } from "../../components/templates/filters/form-filters/TablesFilters";
 import { PageHeader } from "../../components/templates/PageHeader";
+import { AuthContext } from "../../contexts/AuthContext";
 import { TablesSchema } from "../../schemas/TablesSchema";
 import { api } from "../../services/api";
 import { TableType } from "../../types/TableType";
@@ -20,6 +21,9 @@ const Index = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [animation, setAnimation] = useState<string>("flipInX");
+
+  const { token } = useContext(AuthContext);
+
 
   const {
     register,
@@ -68,7 +72,8 @@ const Index = () => {
   });
 
   const getTables = async () => {
-    await api.get("tables").then(({ data }: any) => {
+   
+    await api(token ).get("tables").then(({ data }: any) => {
       setTables(data);
     });
   };
@@ -84,7 +89,8 @@ const Index = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      api.post("tables/filters", data).then(({ data }) => {
+      
+      api(token).post("tables/filters", data).then(({ data }) => {
         setTables(data);
       });
     } catch (e: any) {
