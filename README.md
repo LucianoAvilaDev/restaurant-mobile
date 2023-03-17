@@ -10,3 +10,14 @@
   - Cadastro e controle de Perfis  
 
 Este projeto encontra-se em inacabado e pausado, porém algumas telas podem ser visualizadas.
+
+## Screenshots
+<br>
+<img src="./samples/01.png"><br><br>
+<img src="./samples/02.png"><br><br>
+<img src="./samples/03.png"><br><br>
+<img src="./samples/04.png"><br><br>
+<img src="./samples/05.png"><br><br>
+<img src="./samples/06.png"><br><br>
+<img src="./samples/07.png"><br><br>
+<img src="./samples/08.png">
