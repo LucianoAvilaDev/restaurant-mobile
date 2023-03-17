@@ -13,11 +13,11 @@ Este projeto encontra-se em inacabado e pausado, porém algumas telas podem ser 
 
 ## Screenshots
 <br>
-<img src="./samples/01.png"><br><br>
-<img src="./samples/02.png"><br><br>
-<img src="./samples/03.png"><br><br>
-<img src="./samples/04.png"><br><br>
-<img src="./samples/05.png"><br><br>
-<img src="./samples/06.png"><br><br>
-<img src="./samples/07.png"><br><br>
-<img src="./samples/08.png">
+<img src="./samples/01.jpg"><br><br>
+<img src="./samples/02.jpg"><br><br>
+<img src="./samples/03.jpg"><br><br>
+<img src="./samples/04.jpg"><br><br>
+<img src="./samples/05.jpg"><br><br>
+<img src="./samples/06.jpg"><br><br>
+<img src="./samples/07.jpg"><br><br>
+<img src="./samples/08.jpg">
